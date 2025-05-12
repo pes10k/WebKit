@@ -1572,7 +1572,7 @@ CachedResourceLoader::RevalidationPolicy CachedResourceLoader::determineRevalida
         LOG(ResourceLoading, "CachedResourceLoader::determineRevalidationPolicy reloading due to CachePolicyReload.");
         return Reload;
     }
-    
+
     // We'll try to reload the resource if it failed last time.
     if (existingResource->errorOccurred()) {
         LOG(ResourceLoading, "CachedResourceLoader::determineRevalidationPolicye reloading due to resource being in the error state");
@@ -1607,7 +1607,7 @@ CachedResourceLoader::RevalidationPolicy CachedResourceLoader::determineRevalida
             }
             return Revalidate;
         }
-        
+
         // No, must reload.
         LOG(ResourceLoading, "CachedResourceLoader::determineRevalidationPolicy reloading due to missing cache validators.");
         return Reload;
@@ -1804,7 +1804,7 @@ Vector<Ref<SVGImage>> CachedResourceLoader::allCachedSVGImages() const
         if (RefPtr image = cachedResourceSVGImage(resource.get()))
             allCachedSVGImages.append(image.releaseNonNull());
     }
-        
+
     return allCachedSVGImages;
 }
 

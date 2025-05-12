@@ -62,7 +62,7 @@ enum class ShouldUpgradeLocalhostAndIPAddress : bool { No, Yes };
 class ResourceRequestBase {
     WTF_MAKE_TZONE_ALLOCATED(ResourceRequestBase);
 public:
-    
+
     enum class SameSiteDisposition : uint8_t { Unspecified, SameSite, CrossSite };
 
     struct RequestData {
@@ -125,13 +125,13 @@ public:
         , m_hiddenFromInspector(false)
     {
     }
-    
+
     WEBCORE_EXPORT ResourceRequest isolatedCopy() const;
     WEBCORE_EXPORT void setAsIsolatedCopy(const ResourceRequest&);
 
     WEBCORE_EXPORT bool isNull() const;
     WEBCORE_EXPORT bool isEmpty() const;
-    
+
     WEBCORE_EXPORT const URL& url() const;
     WEBCORE_EXPORT void setURL(URL&&, bool didFilterLinkDecoration = false);
 
@@ -144,10 +144,10 @@ public:
 
     WEBCORE_EXPORT ResourceRequestCachePolicy cachePolicy() const;
     WEBCORE_EXPORT void setCachePolicy(ResourceRequestCachePolicy cachePolicy);
-    
+
     WEBCORE_EXPORT double timeoutInterval() const; // May return 0 when using platform default.
     WEBCORE_EXPORT void setTimeoutInterval(double);
-    
+
     WEBCORE_EXPORT const URL& firstPartyForCookies() const;
     WEBCORE_EXPORT void setFirstPartyForCookies(const URL&);
 
@@ -167,7 +167,7 @@ public:
 
     WEBCORE_EXPORT const String& httpMethod() const;
     WEBCORE_EXPORT void setHTTPMethod(const String& httpMethod);
-    
+
     WEBCORE_EXPORT const HTTPHeaderMap& httpHeaderFields() const;
     WEBCORE_EXPORT void setHTTPHeaderFields(HTTPHeaderMap);
 
@@ -222,7 +222,7 @@ public:
     WEBCORE_EXPORT RefPtr<FormData> httpBody() const;
     WEBCORE_EXPORT bool hasUpload() const;
     WEBCORE_EXPORT void setHTTPBody(RefPtr<FormData>&&);
-    
+
     bool platformRequestUpdated() const { return m_platformRequestUpdated; }
 
     WEBCORE_EXPORT bool allowCookies() const;
@@ -232,9 +232,17 @@ public:
     WEBCORE_EXPORT void setPriority(ResourceLoadPriority);
 
     WEBCORE_EXPORT static String partitionName(const String& domain);
-    const String& cachePartition() const { return m_cachePartition; }
+    const String& cachePartition() const {
+        return emptyString();
+        // @pes
+        // return m_cachePartition;
+    }
     WEBCORE_EXPORT void setCachePartition(const String&);
-    void setDomainForCachePartition(const String& domain) { setCachePartition(partitionName(domain)); }
+    void setDomainForCachePartition(const String& domain) {
+        UNUSED_PARAM(domain);
+        // @pes
+        setCachePartition(String { emptyString() });
+    }
 
     WEBCORE_EXPORT bool isConditional() const;
     WEBCORE_EXPORT void makeUnconditional();
@@ -245,7 +253,7 @@ public:
 
     ResourceRequestRequester requester() const { return m_requestData.m_requester; }
     void setRequester(ResourceRequestRequester requester) { m_requestData.m_requester = requester; }
-    
+
     // Who initiated the request so the Inspector can associate it with a context. E.g. a Web Worker.
     String initiatorIdentifier() const { return m_initiatorIdentifier; }
     void setInitiatorIdentifier(const String& identifier) { m_initiatorIdentifier = identifier; }
@@ -314,7 +322,7 @@ protected:
 
     // The ResourceRequest subclass may "shadow" this method to compare platform specific fields
     static bool platformCompare(const ResourceRequest&, const ResourceRequest&) { return true; }
-    
+
     RequestData m_requestData;
     String m_initiatorIdentifier;
     String m_cachePartition { emptyString() };

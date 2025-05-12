@@ -56,7 +56,7 @@ namespace WebCore {
 // Rough size estimate for the memory cache.
 unsigned StyleSheetContents::estimatedSizeInBytes() const
 {
-    // Note that this does not take into account size of the strings hanging from various objects. 
+    // Note that this does not take into account size of the strings hanging from various objects.
     // The assumption is that nearly all of of them are atoms that would exist anyway.
     unsigned size = sizeof(*this);
 
@@ -204,7 +204,7 @@ void StyleSheetContents::parserAppendRule(Ref<StyleRuleBase>&& rule)
 StyleRuleBase* StyleSheetContents::ruleAt(unsigned index) const
 {
     ASSERT_WITH_SECURITY_IMPLICATION(index < ruleCount());
-    
+
     unsigned childVectorIndex = index;
     if (childVectorIndex < m_layerRulesBeforeImportRules.size())
         return m_layerRulesBeforeImportRules[childVectorIndex].ptr();
@@ -215,12 +215,12 @@ StyleRuleBase* StyleSheetContents::ruleAt(unsigned index) const
         return m_importRules[childVectorIndex].ptr();
 
     childVectorIndex -= m_importRules.size();
-    
+
     if (childVectorIndex < m_namespaceRules.size())
         return m_namespaceRules[childVectorIndex].ptr();
-    
+
     childVectorIndex -= m_namespaceRules.size();
-    
+
     return m_childRules[childVectorIndex].ptr();
 }
 
@@ -256,7 +256,7 @@ void StyleSheetContents::parserSetEncodingFromCharsetRule(const String& encoding
 {
     // Parser enforces that there is ever only one @charset.
     ASSERT(m_encodingFromCharsetRule.isNull());
-    m_encodingFromCharsetRule = encoding; 
+    m_encodingFromCharsetRule = encoding;
 }
 
 bool StyleSheetContents::wrapperInsertRule(Ref<StyleRuleBase>&& rule, unsigned index)
@@ -322,7 +322,7 @@ bool StyleSheetContents::wrapperInsertRule(Ref<StyleRuleBase>&& rule, unsigned i
             return false;
 
         m_namespaceRules.insert(index, *namespaceRule);
-        
+
         // For now to be compatible with IE and Firefox if a namespace rule with the same
         // prefix is added, it overwrites previous ones.
         // FIXME: The eventual correct behavior would be to ensure that the last value in

@@ -74,13 +74,17 @@ public:
         : ResourceRequestBase(URL(), ResourceRequestCachePolicy::UseProtocolCachePolicy)
     {
     }
-    
+
     WEBCORE_EXPORT ResourceRequest(NSURLRequest *);
 
     ResourceRequest(ResourceRequestBase&& base, String&& cachePartition, bool hiddenFromInspector)
         : ResourceRequestBase(WTFMove(base))
     {
-        m_cachePartition = WTFMove(cachePartition);
+        // @pes
+        // m_cachePartition = WTFMove(cachePartition);
+        UNUSED_PARAM(cachePartition);
+        m_cachePartition = String { emptyString() };
+
         m_hiddenFromInspector = hiddenFromInspector;
     }
 
@@ -89,7 +93,7 @@ public:
     WEBCORE_EXPORT static ResourceRequest fromResourceRequestData(ResourceRequestData&&, String&& cachePartition, bool hiddenFromInspector);
 
     WEBCORE_EXPORT void updateFromDelegatePreservingOldProperties(const ResourceRequest&);
-    
+
     bool encodingRequiresPlatformData() const { return m_httpBody || m_nsRequest; }
     WEBCORE_EXPORT NSURLRequest *nsURLRequest(HTTPBodyUpdatePolicy) const;
 

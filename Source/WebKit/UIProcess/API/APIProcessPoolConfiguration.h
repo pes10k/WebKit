@@ -49,7 +49,7 @@ public:
 
     explicit ProcessPoolConfiguration();
     virtual ~ProcessPoolConfiguration();
-    
+
     Ref<ProcessPoolConfiguration> copy();
 
     bool usesSingleWebProcess() const { return m_usesSingleWebProcess; }
@@ -76,7 +76,11 @@ public:
     void setInjectedBundlePath(const WTF::String& injectedBundlePath) { m_injectedBundlePath = injectedBundlePath; }
 
     const Vector<WTF::String>& cachePartitionedURLSchemes() { return m_cachePartitionedURLSchemes; }
-    void setCachePartitionedURLSchemes(Vector<WTF::String>&& cachePartitionedURLSchemes) { m_cachePartitionedURLSchemes = WTFMove(cachePartitionedURLSchemes); }
+    void setCachePartitionedURLSchemes(Vector<WTF::String>&& cachePartitionedURLSchemes) {
+        UNUSED_PARAM(cachePartitionedURLSchemes);
+        // @pes
+    //    m_cachePartitionedURLSchemes = WTFMove(cachePartitionedURLSchemes);
+    }
 
     const Vector<WTF::String>& alwaysRevalidatedURLSchemes() { return m_alwaysRevalidatedURLSchemes; }
     void setAlwaysRevalidatedURLSchemes(Vector<WTF::String>&& alwaysRevalidatedURLSchemes) { m_alwaysRevalidatedURLSchemes = WTFMove(alwaysRevalidatedURLSchemes); }
@@ -92,10 +96,10 @@ public:
 
     bool attrStyleEnabled() const { return m_attrStyleEnabled; }
     void setAttrStyleEnabled(bool enabled) { m_attrStyleEnabled = enabled; }
-    
+
     bool shouldThrowExceptionForGlobalConstantRedeclaration() const { return m_shouldThrowExceptionForGlobalConstantRedeclaration; }
     void setShouldThrowExceptionForGlobalConstantRedeclaration(bool shouldThrow) { m_shouldThrowExceptionForGlobalConstantRedeclaration = shouldThrow; }
-    
+
     bool alwaysRunsAtBackgroundPriority() const { return m_alwaysRunsAtBackgroundPriority; }
     void setAlwaysRunsAtBackgroundPriority(bool alwaysRunsAtBackgroundPriority) { m_alwaysRunsAtBackgroundPriority = alwaysRunsAtBackgroundPriority; }
 

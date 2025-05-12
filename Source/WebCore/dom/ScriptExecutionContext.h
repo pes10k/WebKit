@@ -312,7 +312,11 @@ public:
     WEBCORE_EXPORT JSC::JSGlobalObject* globalObject() const;
 
     WEBCORE_EXPORT String domainForCachePartition() const;
-    void setDomainForCachePartition(String&& domain) { m_domainForCachePartition = WTFMove(domain); }
+    void setDomainForCachePartition(String&& domain) {
+        UNUSED_PARAM(domain);
+        // @pes
+        // setCachePartition(partitionName(domain));
+    }
 
     bool allowsMediaDevices() const;
     ServiceWorker* activeServiceWorker() const { return m_activeServiceWorker.get(); }

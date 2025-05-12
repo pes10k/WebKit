@@ -21,7 +21,7 @@
  * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "config.h"
 #include "ResourceRequestBase.h"
@@ -109,22 +109,22 @@ void ResourceRequestBase::setAsIsolatedCopy(const ResourceRequest& other)
 
 bool ResourceRequestBase::isEmpty() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return url().isEmpty();
 }
 
 bool ResourceRequestBase::isNull() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return url().isNull();
 }
 
-const URL& ResourceRequestBase::url() const 
+const URL& ResourceRequestBase::url() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_requestData.m_url;
 }
 
@@ -240,7 +240,7 @@ void ResourceRequestBase::upgradeInsecureRequest()
 
 void ResourceRequestBase::removeCredentials()
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     if (!m_requestData.m_url.hasCredentials())
         return;
@@ -251,58 +251,58 @@ void ResourceRequestBase::removeCredentials()
 
 ResourceRequestCachePolicy ResourceRequestBase::cachePolicy() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_requestData.m_cachePolicy;
 }
 
 void ResourceRequestBase::setCachePolicy(ResourceRequestCachePolicy cachePolicy)
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     if (m_requestData.m_cachePolicy == cachePolicy)
         return;
-    
+
     m_requestData.m_cachePolicy = cachePolicy;
-    
+
     m_platformRequestUpdated = false;
 }
 
 double ResourceRequestBase::timeoutInterval() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_requestData.m_timeoutInterval;
 }
 
-void ResourceRequestBase::setTimeoutInterval(double timeoutInterval) 
+void ResourceRequestBase::setTimeoutInterval(double timeoutInterval)
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     if (m_requestData.m_timeoutInterval == timeoutInterval)
         return;
 
     m_requestData.m_timeoutInterval = timeoutInterval;
-    
+
     m_platformRequestUpdated = false;
 }
 
 const URL& ResourceRequestBase::firstPartyForCookies() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_requestData.m_firstPartyForCookies;
 }
 
 void ResourceRequestBase::setFirstPartyForCookies(const URL& firstPartyForCookies)
-{ 
-    updateResourceRequest(); 
+{
+    updateResourceRequest();
 
     if (m_requestData.m_firstPartyForCookies == firstPartyForCookies)
         return;
 
     m_requestData.m_firstPartyForCookies = firstPartyForCookies;
-    
+
     m_platformRequestUpdated = false;
 }
 
@@ -347,26 +347,26 @@ void ResourceRequestBase::setIsTopSite(bool isTopSite)
 
 const String& ResourceRequestBase::httpMethod() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_requestData.m_httpMethod;
 }
 
-void ResourceRequestBase::setHTTPMethod(const String& httpMethod) 
+void ResourceRequestBase::setHTTPMethod(const String& httpMethod)
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     if (m_requestData.m_httpMethod == httpMethod)
         return;
 
     m_requestData.m_httpMethod = httpMethod;
-    
+
     m_platformRequestUpdated = false;
 }
 
 const HTTPHeaderMap& ResourceRequestBase::httpHeaderFields() const
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     return m_requestData.m_httpHeaderFields;
 }
@@ -380,8 +380,8 @@ String ResourceRequestBase::httpHeaderField(StringView name) const
 
 String ResourceRequestBase::httpHeaderField(HTTPHeaderName name) const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_requestData.m_httpHeaderFields.get(name);
 }
 
@@ -390,7 +390,7 @@ void ResourceRequestBase::setHTTPHeaderField(const String& name, const String& v
     updateResourceRequest();
 
     m_requestData.m_httpHeaderFields.set(name, value);
-    
+
     m_platformRequestUpdated = false;
 }
 
@@ -405,7 +405,7 @@ void ResourceRequestBase::setHTTPHeaderField(HTTPHeaderName name, const String& 
 
 void ResourceRequestBase::clearHTTPAuthorization()
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     if (!m_requestData.m_httpHeaderFields.remove(HTTPHeaderName::Authorization))
         return;
@@ -425,7 +425,7 @@ void ResourceRequestBase::setHTTPContentType(const String& httpContentType)
 
 void ResourceRequestBase::clearHTTPContentType()
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     m_requestData.m_httpHeaderFields.remove(HTTPHeaderName::ContentType);
 
@@ -471,10 +471,10 @@ void ResourceRequestBase::setExistingHTTPReferrerToOriginString()
 
     setHTTPHeaderField(HTTPHeaderName::Referer, SecurityPolicy::referrerToOriginString(URL { httpReferrer() }));
 }
-    
+
 void ResourceRequestBase::clearHTTPReferrer()
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     m_requestData.m_httpHeaderFields.remove(HTTPHeaderName::Referer);
 
@@ -522,7 +522,7 @@ void ResourceRequestBase::setHTTPUserAgent(const String& httpUserAgent)
 
 void ResourceRequestBase::clearHTTPUserAgent()
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     m_requestData.m_httpHeaderFields.remove(HTTPHeaderName::UserAgent);
 
@@ -540,8 +540,8 @@ void ResourceRequestBase::clearHTTPAcceptEncoding()
 
 void ResourceRequestBase::setResponseContentDispositionEncodingFallbackArray(const String& encoding1, const String& encoding2, const String& encoding3)
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     m_requestData.m_responseContentDispositionEncodingFallbackArray.clear();
     m_requestData.m_responseContentDispositionEncodingFallbackArray.reserveInitialCapacity(!encoding1.isNull() + !encoding2.isNull() + !encoding3.isNull());
     if (!encoding1.isNull())
@@ -550,7 +550,7 @@ void ResourceRequestBase::setResponseContentDispositionEncodingFallbackArray(con
         m_requestData.m_responseContentDispositionEncodingFallbackArray.append(encoding2);
     if (!encoding3.isNull())
         m_requestData.m_responseContentDispositionEncodingFallbackArray.append(encoding3);
-    
+
     m_platformRequestUpdated = false;
 }
 
@@ -569,7 +569,7 @@ bool ResourceRequestBase::hasUpload() const
                 return true;
         }
     }
-    
+
     return false;
 }
 
@@ -586,20 +586,20 @@ void ResourceRequestBase::setHTTPBody(RefPtr<FormData>&& httpBody)
 
 bool ResourceRequestBase::allowCookies() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_requestData.m_allowCookies;
 }
 
 void ResourceRequestBase::setAllowCookies(bool allowCookies)
 {
-    updateResourceRequest(); 
+    updateResourceRequest();
 
     if (m_requestData.m_allowCookies == allowCookies)
         return;
 
     m_requestData.m_allowCookies = allowCookies;
-    
+
     m_platformRequestUpdated = false;
 }
 
@@ -739,13 +739,13 @@ bool equalIgnoringHeaderFields(const ResourceRequestBase& a, const ResourceReque
 {
     if (a.url() != b.url())
         return false;
-    
+
     if (a.cachePolicy() != b.cachePolicy())
         return false;
-    
+
     if (a.timeoutInterval() != b.timeoutInterval())
         return false;
-    
+
     if (a.firstPartyForCookies() != b.firstPartyForCookies())
         return false;
 
@@ -754,13 +754,13 @@ bool equalIgnoringHeaderFields(const ResourceRequestBase& a, const ResourceReque
 
     if (a.isTopSite() != b.isTopSite())
         return false;
-    
+
     if (a.httpMethod() != b.httpMethod())
         return false;
-    
+
     if (a.allowCookies() != b.allowCookies())
         return false;
-    
+
     if (a.priority() != b.priority())
         return false;
 
@@ -774,10 +774,10 @@ bool ResourceRequestBase::equal(const ResourceRequest& a, const ResourceRequest&
 {
     if (!equalIgnoringHeaderFields(a, b))
         return false;
-    
+
     if (a.httpHeaderFields() != b.httpHeaderFields())
         return false;
-        
+
     return ResourceRequest::platformCompare(a, b);
 }
 
@@ -852,7 +852,7 @@ void ResourceRequestBase::updateResourceRequest(HTTPBodyUpdatePolicy bodyPolicy)
 #if !PLATFORM(COCOA) && !USE(SOUP)
 unsigned initializeMaximumHTTPConnectionCountPerHost()
 {
-    // This is used by the loader to control the number of issued parallel load requests. 
+    // This is used by the loader to control the number of issued parallel load requests.
     // Four seems to be a common default in HTTP frameworks.
     return 4;
 }
@@ -860,23 +860,25 @@ unsigned initializeMaximumHTTPConnectionCountPerHost()
 
 void ResourceRequestBase::setCachePartition(const String& cachePartition)
 {
-#if ENABLE(CACHE_PARTITIONING)
-    ASSERT(!cachePartition.isNull());
-    ASSERT(cachePartition == partitionName(cachePartition));
-    m_cachePartition = cachePartition;
-#else
+// #if ENABLE(CACHE_PARTITIONING)
+    // ASSERT(!cachePartition.isNull());
+    // ASSERT(cachePartition == partitionName(cachePartition));
+    // m_cachePartition = cachePartition;
+// #else
+    m_cachePartition = String { emptyString() };
     UNUSED_PARAM(cachePartition);
-#endif
+// #endif
 }
 
 String ResourceRequestBase::partitionName(const String& domain)
 {
-    if (domain.isNull())
-        return emptyString();
-    auto highLevel = PublicSuffixStore::singleton().topPrivatelyControlledDomain(domain);
-    if (highLevel.isNull())
-        return emptyString();
-    return highLevel;
+    return String { emptyString() };
+    UNUSED_PARAM(domain);
+    // if (domain.isNull())
+    // auto highLevel = PublicSuffixStore::singleton().topPrivatelyControlledDomain(domain);
+    // if (highLevel.isNull())
+        // return emptyString();
+    // return highLevel;
 }
 
 bool ResourceRequestBase::isThirdParty() const
