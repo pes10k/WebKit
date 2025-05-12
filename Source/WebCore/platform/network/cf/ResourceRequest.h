@@ -54,13 +54,23 @@ using ResourceRequestData = std::variant<ResourceRequestBase::RequestData, Resou
 class ResourceRequest : public ResourceRequestBase {
     WTF_MAKE_TZONE_ALLOCATED_EXPORT(ResourceRequest, WEBCORE_EXPORT);
 public:
-    explicit ResourceRequest(const String& url) 
-        : ResourceRequestBase(URL({ }, url), ResourceRequestCachePolicy::UseProtocolCachePolicy)
+    explicit ResourceRequest(String&& url)
+        : ResourceRequestBase(URL({ }, WTFMove(url)), ResourceRequestCachePolicy::UseProtocolCachePolicy)
     {
     }
 
-    ResourceRequest(const URL& url) 
+    ResourceRequest(const String& url)
+        : ResourceRequestBase(URL({ }, WTFMove(url)), ResourceRequestCachePolicy::UseProtocolCachePolicy)
+    {
+    }
+
+    ResourceRequest(const URL& url)
         : ResourceRequestBase(url, ResourceRequestCachePolicy::UseProtocolCachePolicy)
+    {
+    }
+
+    ResourceRequest(URL&& url)
+        : ResourceRequestBase(WTFMove(url), ResourceRequestCachePolicy::UseProtocolCachePolicy)
     {
     }
 
@@ -69,12 +79,12 @@ public:
     {
         setHTTPReferrer(referrer);
     }
-    
+
     ResourceRequest()
         : ResourceRequestBase(URL(), ResourceRequestCachePolicy::UseProtocolCachePolicy)
     {
     }
-    
+
     WEBCORE_EXPORT ResourceRequest(NSURLRequest *);
 
     ResourceRequest(ResourceRequestBase&& base
@@ -83,7 +93,11 @@ public:
     )
         : ResourceRequestBase(WTFMove(base))
     {
-        m_cachePartition = cachePartition;
+        // @pes
+        // m_cachePartition = WTFMove(cachePartition);
+        UNUSED_PARAM(cachePartition);
+        m_cachePartition = emptyString();
+
         m_hiddenFromInspector = hiddenFromInspector;
     }
 
@@ -92,7 +106,7 @@ public:
     WEBCORE_EXPORT static ResourceRequest fromResourceRequestData(ResourceRequestData, const String& cachePartition, bool hiddenFromInspector);
 
     WEBCORE_EXPORT void updateFromDelegatePreservingOldProperties(const ResourceRequest&);
-    
+
     bool encodingRequiresPlatformData() const { return m_httpBody || m_nsRequest; }
     WEBCORE_EXPORT NSURLRequest *nsURLRequest(HTTPBodyUpdatePolicy) const;
 

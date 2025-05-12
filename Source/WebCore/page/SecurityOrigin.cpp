@@ -370,7 +370,7 @@ bool SecurityOrigin::canDisplay(const URL& url, const OriginAccessPatterns& patt
 
     if (url.pathEnd() > maximumURLSize)
         return false;
-    
+
 #if !PLATFORM(IOS_FAMILY) && !ENABLE(BUBBLEWRAP_SANDBOX)
     if (m_data.protocol() == "file"_s && url.protocolIsFile() && !FileSystem::filesHaveSameVolume(m_filePath, url.fileSystemPath()))
         return false;
@@ -482,13 +482,15 @@ void SecurityOrigin::grantStorageAccessFromFileURLsQuirk()
 
 String SecurityOrigin::domainForCachePartition() const
 {
-    if (isHTTPFamily())
-        return host();
-
-    if (LegacySchemeRegistry::shouldPartitionCacheForURLScheme(m_data.protocol()))
-        return host();
-
+    // @pes
     return emptyString();
+    // if (isHTTPFamily())
+        // return host();
+
+    // if (LegacySchemeRegistry::shouldPartitionCacheForURLScheme(m_data.protocol()))
+        // return host();
+
+    // return emptyString();
 }
 
 void SecurityOrigin::setEnforcesFilePathSeparation()
@@ -595,7 +597,7 @@ bool SecurityOrigin::equal(const SecurityOrigin& other) const
 
     if (isOpaque() || other.isOpaque())
         return data().opaqueOriginIdentifier() == other.data().opaqueOriginIdentifier();
-    
+
     if (!isSameSchemeHostPort(other))
         return false;
 

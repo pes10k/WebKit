@@ -560,7 +560,7 @@ void HTMLLinkElement::removedFromAncestor(RemovalType removalType, ContainerNode
 
     if (wasLoading)
         removePendingSheet();
-    
+
     if (m_styleScope) {
         m_styleScope->removeStyleSheetCandidateNode(*this);
         m_styleScope = nullptr;
@@ -720,7 +720,7 @@ void HTMLLinkElement::dispatchPendingEvent(LinkEventSender* eventSender, const A
 
 DOMTokenList& HTMLLinkElement::relList()
 {
-    if (!m_relList) 
+    if (!m_relList)
         m_relList = makeUniqueWithoutRefCountedCheck<DOMTokenList>(*this, HTMLNames::relAttr, [](Document& document, StringView token) {
             return LinkRelAttribute::isSupported(document, token);
         });

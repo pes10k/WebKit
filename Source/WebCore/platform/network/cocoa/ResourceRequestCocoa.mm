@@ -76,7 +76,9 @@ ResourceRequest::ResourceRequest(ResourceRequestPlatformData&& platformData, con
         setWasSchemeOptimisticallyUpgraded(platformData.m_wasSchemeOptimisticallyUpgraded);
     }
 
-    setCachePartition(cachePartition);
+    UNUSED_PARAM(cachePartition);
+    // @pes
+    // setCachePartition(cachePartition);
     setHiddenFromInspector(hiddenFromInspector);
 }
 
@@ -104,7 +106,7 @@ NSURLRequest *ResourceRequest::nsURLRequest(HTTPBodyUpdatePolicy bodyPolicy) con
 ResourceRequestPlatformData ResourceRequest::getResourceRequestPlatformData() const
 {
     RELEASE_ASSERT(m_httpBody || m_nsRequest);
-    
+
     auto requestToSerialize = retainPtr(this->nsURLRequest(WebCore::HTTPBodyUpdatePolicy::DoNotUpdateHTTPBody));
 
     if (Class requestClass = [requestToSerialize class]; UNLIKELY(requestClass != [NSURLRequest class] && requestClass != [NSMutableURLRequest class])) {

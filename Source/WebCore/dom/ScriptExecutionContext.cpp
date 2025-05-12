@@ -660,13 +660,15 @@ JSC::JSGlobalObject* ScriptExecutionContext::globalObject() const
 
 String ScriptExecutionContext::domainForCachePartition() const
 {
-    if (!m_domainForCachePartition.isNull())
-        return m_domainForCachePartition;
-
-    if (m_storageBlockingPolicy != StorageBlockingPolicy::BlockThirdParty)
-        return emptyString();
-
-    return topOrigin().domainForCachePartition();
+    return String { emptyString() };
+    // @pes
+    // if (!m_domainForCachePartition.isNull())
+        // return m_domainForCachePartition;
+//
+    // if (m_storageBlockingPolicy != StorageBlockingPolicy::BlockThirdParty)
+        // return emptyString();
+//
+    // return topOrigin().domainForCachePartition();
 }
 
 bool ScriptExecutionContext::allowsMediaDevices() const
@@ -718,7 +720,7 @@ ServiceWorkerContainer* ScriptExecutionContext::ensureServiceWorkerContainer()
             navigator = &window->navigator();
     } else
         navigator = &downcast<WorkerGlobalScope>(*this).navigator();
-        
+
     return navigator ? &navigator->serviceWorker() : nullptr;
 }
 

@@ -121,12 +121,16 @@ void CachedResourceRequest::upgradeInsecureRequestIfNeeded(Document& document, C
 
 void CachedResourceRequest::setDomainForCachePartition(Document& document)
 {
-    m_resourceRequest.setDomainForCachePartition(document.domainForCachePartition());
+    UNUSED_PARAM(document);
+    m_resourceRequest.setDomainForCachePartition(String { emptyString() });
+    // @pes
+    // m_resourceRequest.setDomainForCachePartition(document.domainForCachePartition());
 }
 
 void CachedResourceRequest::setDomainForCachePartition(const String& domain)
 {
-    m_resourceRequest.setDomainForCachePartition(domain);
+    UNUSED_PARAM(domain);
+    m_resourceRequest.setDomainForCachePartition(String { emptyString() });
 }
 
 static inline void appendAdditionalSupportedImageMIMETypes(StringBuilder& acceptHeader)
